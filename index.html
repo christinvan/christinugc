@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC Portfolio | Your Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Warm sunset palette */
+            --coral: #FF6B5A;
+            --peach: #FFB88C;
+            --cream: #FFF4E6;
+            --terracotta: #E85D4A;
+            --sand: #F5E6D3;
+            --charcoal: #2A2A2A;
+            --soft-black: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        /* Decorative background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255, 107, 90, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -30%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(255, 184, 140, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, 20px) scale(1.05); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--charcoal);
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 60px 0;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .video-card {
+            position: relative;
+            aspect-ratio: 9/16;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--sand);
+            box-shadow: 0 4px 20px rgba(232, 93, 74, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(232, 93, 74, 0.25);
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(26, 26, 26, 0.7) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .play-button {
+            background: var(--terracotta);
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
+        }
+
+        .video-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            color: white;
+            font-weight: 500;
+            z-index: 2;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-title {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            margin: 80px 0;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            align-items: start;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .headshot-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--peach);
+            box-shadow: 0 8px 24px rgba(255, 107, 90, 0.2);
+        }
+
+        .headshot-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--peach) 0%, var(--coral) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .headshot-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-content h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            color: var(--terracotta);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 60px 0 80px;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .cta-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            color: var(--terracotta);
+            margin-bottom: 32px;
+            font-weight: 600;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--coral);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 90, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 90, 0.4);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .social-link {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--coral);
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--coral);
+            color: white;
+            transform: translateY(-4px) rotate(5deg);
+            box-shadow: 0 8px 24px rgba(255, 107, 90, 0.3);
+        }
+
+        /* Modal/Lightbox */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-video {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--coral);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--terracotta);
+            transform: rotate(90deg);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-section {
+                grid-template-columns: 1fr;
+                padding: 40px 24px;
+                text-align: center;
+            }
+
+            .headshot-container {
+                margin: 0 auto;
+            }
+
+            .about-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Your Name</h1>
+            <p class="tagline">UGC Creator & Storyteller</p>
+        </header>
+
+        <!-- Video Grid -->
+        <section class="video-grid" id="videoGrid">
+            <!-- Videos will be populated by JavaScript -->
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="headshot-container">
+                <!-- Replace src with your actual headshot image -->
+                <!-- <img src="your-headshot.jpg" alt="Your Name"> -->
+                <div class="headshot-placeholder">YN</div>
+            </div>
+            <div class="about-content">
+                <h2>Hey, I'm [Your Name]!</h2>
+                <p>I'm a UGC creator with a passion for bringing brands to life through authentic, engaging content. With [X years] of videography experience, I know how to capture those scroll-stopping moments that connect with real people.</p>
+                <p>I specialize in creating [type of content], and I love working with brands that value creativity and genuine storytelling. Whether it's product demos, lifestyle content, or testimonials, I bring energy and authenticity to every frame.</p>
+                <p>When I'm not creating content, you'll find me [your interests/hobbies]. Let's create something amazing together!</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Let's Work Together</h2>
+            <div class="cta-buttons">
+                <a href="mailto:your.email@example.com" class="btn btn-primary">Get in Touch</a>
+                <div class="social-links">
+                    <a href="https://instagram.com/yourusername" target="_blank" class="social-link" title="Instagram">IG</a>
+                    <a href="https://tiktok.com/@yourusername" target="_blank" class="social-link" title="TikTok">TT</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">×</button>
+            <video class="modal-video" id="modalVideo" controls autoplay>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // EASY EDITING SECTION - UPDATE YOUR INFO HERE
+        // ============================================
+        
+        const portfolioData = {
+            // Your basic info
+            name: "Your Name",
+            tagline: "UGC Creator & Storyteller",
+            email: "your.email@example.com",
+            instagram: "https://instagram.com/yourusername",
+            tiktok: "https://tiktok.com/@yourusername",
+            
+            // About section text
+            about: {
+                greeting: "Hey, I'm [Your Name]!",
+                paragraphs: [
+                    "I'm a UGC creator with a passion for bringing brands to life through authentic, engaging content. With [X years] of videography experience, I know how to capture those scroll-stopping moments that connect with real people.",
+                    "I specialize in creating [type of content], and I love working with brands that value creativity and genuine storytelling. Whether it's product demos, lifestyle content, or testimonials, I bring energy and authenticity to every frame.",
+                    "When I'm not creating content, you'll find me [your interests/hobbies]. Let's create something amazing together!"
+                ]
+            },
+            
+            // Your videos - just add video filenames here
+            // Place your video files in the same folder as this HTML file
+            videos: [
+                {
+                    file: "video1.mp4",
+                    title: "Brand Partnership #1",
+                    thumbnail: "thumb1.jpg" // optional - will use video first frame if not provided
+                },
+                {
+                    file: "video2.mp4",
+                    title: "Product Demo",
+                    thumbnail: "thumb2.jpg"
+                },
+                {
+                    file: "video3.mp4",
+                    title: "Lifestyle Content",
+                    thumbnail: "thumb3.jpg"
+                },
+                {
+                    file: "video4.mp4",
+                    title: "Testimonial Style",
+                    thumbnail: "thumb4.jpg"
+                },
+                {
+                    file: "video5.mp4",
+                    title: "Creative Concept",
+                    thumbnail: "thumb5.jpg"
+                }
+            ]
+        };
+
+        // ============================================
+        // CODE BELOW - No need to edit this part!
+        // ============================================
+
+        // Update page content
+        document.querySelector('h1').textContent = portfolioData.name;
+        document.querySelector('.tagline').textContent = portfolioData.tagline;
+        document.querySelector('.about-content h2').textContent = portfolioData.about.greeting;
+        
+        const aboutContent = document.querySelector('.about-content');
+        const existingParagraphs = aboutContent.querySelectorAll('p');
+        existingParagraphs.forEach(p => p.remove());
+        portfolioData.about.paragraphs.forEach(text => {
+            const p = document.createElement('p');
+            p.textContent = text;
+            aboutContent.appendChild(p);
+        });
+
+        document.querySelector('.btn-primary').href = `mailto:${portfolioData.email}`;
+        document.querySelectorAll('.social-link')[0].href = portfolioData.instagram;
+        document.querySelectorAll('.social-link')[1].href = portfolioData.tiktok;
+
+        // Create video grid
+        const videoGrid = document.getElementById('videoGrid');
+        portfolioData.videos.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.innerHTML = `
+                <video class="video-thumbnail" muted>
+                    <source src="${video.file}" type="video/mp4">
+                </video>
+                <div class="play-button"></div>
+                <div class="video-title">${video.title}</div>
+            `;
+            
+            card.addEventListener('click', () => openModal(video.file));
+            videoGrid.appendChild(card);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const closeBtn = document.getElementById('closeModal');
+
+        function openModal(videoSrc) {
+            modalVideo.querySelector('source').src = videoSrc;
+            modalVideo.load();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalVideo.pause();
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
